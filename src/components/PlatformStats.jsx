@@ -1,10 +1,10 @@
 export default async function PlatformStats() {
-  const res = await fetch(
-    "http://localhost:3000/api/stats",
-    {
-      cache: "no-store",
-    }
-  );
+  const baseUrl =
+  process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+
+const res = await fetch(`${baseUrl}/api/stats`, {
+  cache: "no-store",
+});
 
   const stats = await res.json();
 

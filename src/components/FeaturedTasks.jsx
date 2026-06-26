@@ -1,7 +1,9 @@
 export default async function FeaturedTasks() {
-  const res = await fetch("http://localhost:3000/api/tasks", {
-    cache: "no-store",
-  });
+  const baseUrl =process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+
+const res = await fetch(`${baseUrl}/api/tasks`, {
+  cache: "no-store",
+});
 
   const tasks = await res.json();
 
