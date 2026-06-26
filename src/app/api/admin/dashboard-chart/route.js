@@ -3,22 +3,19 @@ import client from "@/lib/mongodb";
 
 export async function GET() {
   try {
+    console.log("MONGO_DB_URI exists:", !!process.env.MONGO_DB_URI);
+
     await client.connect();
 
     const db = client.db("skill_swap_db");
 
     const users = await db.collection("user").countDocuments();
-
     const tasks = await db.collection("tasks").countDocuments();
-
     const activeTasks = await db.collection("tasks").countDocuments({
       status: "in-progress",
     });
 
-    const payments = await db
-      .collection("payments")
-      .find({})
-      .toArray();
+    const payments = await db.collection("payments").find({}).toArray();
 
     const revenue = payments.reduce(
       (sum, item) => sum + Number(item.amount || 0),
@@ -26,26 +23,19 @@ export async function GET() {
     );
 
     return NextResponse.json([
-      {
-        name: "Users",
-        value: users,
-      },
-      {
-        name: "Tasks",
-        value: tasks,
-      },
-      {
-        name: "Active",
-        value: activeTasks,
-      },
-      {
-        name: "Revenue",
-        value: revenue,
-      },
+      { name: "Users", value: users },
+      { name: "Tasks", value: tasks },
+      { name: "Active", value: activeTasks },
+      { name: "Revenue", value: revenue },
     ]);
   } catch (error) {
+    console.error("Dashboard Chart Error:", error);
+
     return NextResponse.json(
-      { message: error.message },
+      {
+        message: error.message,
+        stack: error.stack,
+      },
       { status: 500 }
     );
   }

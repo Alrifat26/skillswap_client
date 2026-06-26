@@ -1,11 +1,14 @@
 export default async function PlatformStats() {
-  const baseUrl =
-  process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+  
+  const baseUrl = process.env.NEXT_PUBLIC_BETTER_AUTH_URL;
 
-const res = await fetch(`${baseUrl}/api/stats`, {
-  cache: "no-store",
-});
+  if (!baseUrl) {
+    throw new Error("NEXT_PUBLIC_BETTER_AUTH_URL is missing");
+  }
 
+  const res = await fetch(`${baseUrl}/api/stats`, {
+    cache: "no-store",
+  });
   const stats = await res.json();
 
   const items = [

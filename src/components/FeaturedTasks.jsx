@@ -1,9 +1,13 @@
 export default async function FeaturedTasks() {
-  const baseUrl =process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_BETTER_AUTH_URL;
 
-const res = await fetch(`${baseUrl}/api/tasks`, {
-  cache: "no-store",
-});
+  if (!baseUrl) {
+    throw new Error("NEXT_PUBLIC_BETTER_AUTH_URL is missing");
+  }
+
+  const res = await fetch(`${baseUrl}/api/tasks`, {
+    cache: "no-store",
+  });
 
   const tasks = await res.json();
 
