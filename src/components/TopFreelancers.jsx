@@ -5,7 +5,7 @@ export default async function TopFreelancers() {
     throw new Error("NEXT_PUBLIC_BETTER_AUTH_URL is missing");
   }
 
-  const res = await fetch(`${baseUrl}/api/tasks`, {
+  const res = await fetch(`${baseUrl}/api/freelancers`, {
     cache: "no-store",
   });
 
