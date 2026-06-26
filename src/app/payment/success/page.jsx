@@ -4,7 +4,6 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-
 function SuccessContent() {
   const searchParams = useSearchParams();
 
@@ -17,15 +16,14 @@ function SuccessContent() {
     if (sessionId && taskId) {
       savePayment();
     } else {
-      
       setLoading(false);
     }
   }, [sessionId, taskId]);
 
   const savePayment = async () => {
     try {
-     
-      await fetch("/api/payments/success", {
+
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/payments/success`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +86,6 @@ function SuccessContent() {
     </div>
   );
 }
-
 
 export default function PaymentSuccessPage() {
   return (

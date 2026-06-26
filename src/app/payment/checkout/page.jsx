@@ -3,14 +3,13 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react"; 
 
-
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const proposalId = searchParams.get("proposalId");
   const taskId = searchParams.get("taskId");
 
   const handlePayment = async () => {
-    const res = await fetch("/api/payment/confirm", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/payment/confirm`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +112,6 @@ function CheckoutContent() {
     </div>
   );
 }
-
 
 export default function PaymentCheckoutPage() {
   return (
